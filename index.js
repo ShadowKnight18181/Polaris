@@ -80,7 +80,7 @@ client.on("ready", () => {
 // on message
 client.on("ready", async () => {
     // This forces the bot to register your commands to your main server immediately
-    const testGuildId = 'YOUR_SERVER_ID_HERE'; 
+    const testGuildId = '1499504291080179854'; 
     const guild = client.guilds.cache.get(testGuildId);
     
     if (guild) {
