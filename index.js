@@ -78,11 +78,16 @@ client.on("ready", () => {
 })
 
 // on message
-client.on("messageCreate", async message => {
-    if (message.system || message.author.bot) return
-    else if (!message.guild || !message.member) return // dm stuff
-    else client.commands.get("message").run(client, message, client.globalTools)
-})
+client.on("ready", async () => {
+    // This forces the bot to register your commands to your main server immediately
+    const testGuildId = 'YOUR_SERVER_ID_HERE'; 
+    const guild = client.guilds.cache.get(testGuildId);
+    
+    if (guild) {
+        await guild.commands.set(client.commands.map(c => c.metadata));
+        console.log(`Commands deployed instantly to ${guild.name}`);
+    }
+});
 
 // on interaction
 client.on("interactionCreate", async int => {
