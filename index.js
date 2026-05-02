@@ -62,14 +62,29 @@ client.on("ready", () => {
     client.startupTime = Date.now() - startTime
     client.version = version
 
-    client.application.commands.fetch() // cache slash commands
-    .then(cmds => {
-        if (cmds.size < 1) { // no commands!! deploy to test server
-            console.info("!!! No global commands found, deploying dev commands to test server (Use /deploy global=true to deploy global commands)")
-            client.commands.get("deploy").run(client, null, client.globalTools)
-        }
-    })
+    client.application.commands.fetch()
+.then(async cmds => {
+    if (cmds.size < 1) {
+        console.info("!!! No global commands found. Deploying...");
+        
+        // Filter out buttons/misc and only send valid slash commands
+        const slashCommands = client.commands
+            .filter(cmd => cmd.metadata && !cmd.metadata.type.includes('button'))
+            .map(cmd => ({
+                name: cmd.metadata.name,
+                description: cmd.metadata.description || "Polaris Command",
+                options: cmd.metadata.options || [],
+                type: 1 // Force type to ChatInput (1)
+            }));
 
+        try {
+            await client.application.commands.set(slashCommands);
+            console.log("✅ Commands deployed successfully!");
+        } catch (err) {
+            console.error("❌ Deployment failed:", err);
+        }
+    }
+});
     client.updateStatus()
     setInterval(client.updateStatus, 15 * 60000);
 
