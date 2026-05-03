@@ -6,8 +6,8 @@
   "lockBotToDevOnly": false,
   
   "enableWebServer": true,
-  "serverPort": 8700,
-  "siteURL": "http://localhost:8700",
+  "serverPort": 6865,
+  "siteURL": "http://localhost:6865",
   
   "changelogURL": "",
   "supportURL": ""
