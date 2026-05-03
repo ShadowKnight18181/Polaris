@@ -1,13 +1,13 @@
 {
-  "test_server_ids": ["12345678"],
+  "test_server_ids": ["1499504291080179854"],
 
-  "developer_ids": ["12345678"],
+  "developer_ids": ["1255580656461807657"],
 
   "lockBotToDevOnly": false,
   
   "enableWebServer": true,
-  "serverPort": 6880,
-  "siteURL": "http://localhost:6880",
+  "serverPort": 8700,
+  "siteURL": "http://localhost:8700",
   
   "changelogURL": "",
   "supportURL": ""
