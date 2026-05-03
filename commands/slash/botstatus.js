@@ -1,11 +1,14 @@
 const { dependencies } = require('../../package.json');
 const config = require("../../config.json")
 
+const { ApplicationCommandOptionType } = require('discord.js');
 module.exports = {
 metadata: {
+    type: 1, 
     name: "botstatus",
     description: "View some details about the bot"
 },
+// ... rest of your code
 
 async run(client, int, tools) {
 

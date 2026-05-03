@@ -39,13 +39,17 @@ client.globalTools = new Tools(client);
 client.db = new Model("servers", require("./database_schema.js").schema)
 
 // command files
+// command files
 const dir = "./commands/"
 client.commands = new Discord.Collection()
 fs.readdirSync(dir).forEach(type => {
     fs.readdirSync(dir + type).filter(x => x.endsWith(".js")).forEach(file => {
         let command = require(dir + type + "/" + file)
         if (!command.metadata) command.metadata = { name: file.split(".js")[0] }
-        command.metadata.type = type
+        
+        // 🛠️ Updated logic to convert folder names to numbers
+        command.metadata.type = (type === "user_context") ? 2 : (type === "message_context" ? 3 : 1)
+        
         client.commands.set(command.metadata.name, command)
     })
 })

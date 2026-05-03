@@ -1,10 +1,12 @@
+const { ApplicationCommandOptionType } = require('discord.js');
 module.exports = {
 metadata: {
+    type: 1, 
     permission: "ManageGuild",
     name: "clear",
     description: "Clear a member's cooldown. (requires manage server permission)",
     args: [
-        { type: "user", name: "member", description: "Which member to clear", required: true }
+        { type: 6, name: "member", description: "Which member to clear", required: true }
     ]
 },
 

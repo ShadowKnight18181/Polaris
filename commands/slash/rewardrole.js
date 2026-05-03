@@ -1,7 +1,9 @@
 const Discord = require("discord.js")
 
+const { ApplicationCommandOptionType } = require('discord.js');
 module.exports = {
 metadata: {
+    type: 1, // 👈 ADD THIS (1 = Slash Command)
     permission: "ManageGuild",
     name: "rewardrole",
     description: "Add or remove a reward role. (requires manage server permission)",
@@ -14,6 +16,7 @@ metadata: {
 },
 
 async run(client, int, tools) {
+// ... rest of your code
 
     let db = await tools.fetchSettings()
     if (!tools.canManageServer(int.member, db.settings.manualPerms)) return tools.warn("*notMod")

@@ -1,7 +1,9 @@
 const fs = require("fs")
 
+const { ApplicationCommandOptionType } = require('discord.js');
 module.exports = {
 metadata: {
+    type: 1, // 👈 ADD THIS (1 = Slash Command)
     dev: true,
     name: "setversion",
     description: "(dev) Change the bot's version number",
@@ -11,6 +13,7 @@ metadata: {
         { type: "integer", name: "custom_timestamp", description: "Custom update timestamp", required: false },
     ]
 },
+// ... rest of your code
 
 async run(client, int, tools) {
 

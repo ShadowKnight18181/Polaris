@@ -1,9 +1,12 @@
+const { ApplicationCommandOptionType } = require('discord.js');
 module.exports = {
 metadata: {
+    type: 1, // 👈 Fixes the "not int32" error for slash commands
     permission: "ManageGuild",
     name: "config",
     description: "Toggle XP gain, or visit the dashboard to tweak server settings. (requires manage server permission)",
 },
+// ... rest of your code
 
 async run(client, int, tools) {
 

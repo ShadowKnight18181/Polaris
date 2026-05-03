@@ -1,7 +1,9 @@
 const util = require("util")
 
+const { ApplicationCommandOptionType } = require('discord.js');
 module.exports = {
 metadata: {
+    type: 1,      // 👈 ADD THIS (1 = Slash Command)
     dev: true,
     name: "run",
     description: "(dev) Evalute JS code, 100% very much safely.",
@@ -9,6 +11,7 @@ metadata: {
         { type: "string", name: "code", description: "Some JS code to very safely evaluate", required: true }
     ]
 },
+// ... rest of your code
 
 async run(client, int, tools) {
 

@@ -1,7 +1,9 @@
+const { ApplicationCommandOptionType } = require('discord.js');
 const util = require("util")
 
 module.exports = {
 metadata: {
+    type: 1, // 👈 ADD THIS (1 = Slash Command)
     dev: true,
     name: "db",
     description: "(dev) View or modify database stuff.",

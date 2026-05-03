@@ -1,16 +1,20 @@
 const multiplierModes = require("../../json/multiplier_modes.json")
 
+const { ApplicationCommandOptionType } = require('discord.js');
 module.exports = {
 metadata: {
+    type: 1, 
     name: "calculate",
     description: "Check how much XP you need to reach a certain level.",
     args: [
-        { type: "integer", name: "target", description: "The desired level", min: 1, max: 1000, required: true },
-        { type: "user", name: "member", description: "Which member to check", required: false }
+        { type: 4, name: "target", description: "The desired level", min: 1, max: 1000, required: true },
+        { type: 6, name: "member", description: "Which member to check", required: false }
     ]
 },
 
 async run(client, int, tools) {
+// ... rest of your code
+
 
     let member = int.member
     let foundUser = int.options.get("member") 
@@ -82,6 +86,6 @@ async run(client, int, tools) {
         description: levelDetails.join("\n"), footer: progressBar
     })
 
-    return int.reply({embeds: [embed]})
+    const {variable} = await reply.fetch();
 
 }}

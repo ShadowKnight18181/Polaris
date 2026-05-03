@@ -1,6 +1,8 @@
 const Discord = require('discord.js')
+const { ApplicationCommandOptionType } = require('discord.js');
 module.exports = {
 metadata: {
+    type: 1, // 👈 ADD THIS (1 = Slash Command)
     name: "sync",
     description: "Sync your level roles by adding missing ones and removing incorrect ones.",
     args: [
@@ -9,6 +11,7 @@ metadata: {
 },
 
 async run(client, int, tools) {
+// ... rest of your code
 
     let foundUser = int.options.get("member")
     let member = foundUser ? foundUser.member : int.member

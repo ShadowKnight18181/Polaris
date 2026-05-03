@@ -1,7 +1,9 @@
 const multiplierModes = require("../../json/multiplier_modes.json")
 
+const { ApplicationCommandOptionType } = require('discord.js');
 module.exports = {
 metadata: {
+    type: 1, // 👈 ADD THIS (1 = Slash Command)
     name: "rank",
     description: "View your current XP, level, and cooldown.",
     args: [
@@ -11,6 +13,7 @@ metadata: {
 },
 
 async run(client, int, tools) {
+// ... rest of your code
 
     // fetch member
     let member = int.member

@@ -1,7 +1,9 @@
 const PageEmbed = require("../../classes/PageEmbed.js")
 
+const { ApplicationCommandOptionType } = require('discord.js');
 module.exports = {
 metadata: {
+    type: 1, // 👈 ADD THIS (1 = Chat Input / Slash Command)
     name: "top",
     description: "View the server's XP leaderboard.",
     args: [
@@ -12,6 +14,7 @@ metadata: {
 },
 
 async run(client, int, tools) {
+// ... rest of your code
 
     let lbLink = `${tools.WEBSITE}/leaderboard/${int.guild.id}`
 
