@@ -873,7 +873,7 @@ async function getDiscordInfo(req, userOnly) {
     let token = await getDiscordToken(req.cookies.polaris) // get discord's tokens using the token in their cookies
     if (!token) return userOnly ? null : [null, null]
 
-    let foundData = discordCache[token] // check for cached data
+    let foundData = discordCache[token._id] // check for cached data
     if (foundData && Date.now() <= foundData.expires) return foundData.data // return cached data if it exists and hasn't expired
 
     // the two things the client authorized - user data and guilds. this is all we need
@@ -885,7 +885,7 @@ async function getDiscordInfo(req, userOnly) {
 
     if (!userData || !guilds || userData.message || guilds.message || !userData.id) return [null, null] // if discord sends error
     let discordRes = [userData, guilds] // return this as an array, so we can do "let [userData, guilds]"
-    discordCache[token] = {data: discordRes, expires: Date.now() + 15000} // 15 second cache to prevent ratelimits uwu
+    discordCache[token._id] = {data: discordRes, expires: Date.now() + 15000} // 15 second cache to prevent ratelimits uwu
     return discordRes
 }
 
