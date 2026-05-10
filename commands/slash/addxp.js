@@ -6,9 +6,9 @@ module.exports = {
         name: "addxp",
         description: "Add or remove XP from a member. (requires manage server permission)",
         args: [
-            { type: 6, name: "member", description: "Which member to modify", required: true }, 
-            { type: 4, name: "xp", description: "How much XP to add", min: -1e10, max: 1e10, required: true }, 
-            { type: 3, name: "operation", description: "How the XP amount should be interpreted", required: false, choices: [ 
+            { type: "user", name: "member", description: "Which member to modify", required: true }, 
+            { type: "integer", name: "xp", description: "How much XP to add", min: -1e10, max: 1e10, required: true }, 
+            { type: "string", name: "operation", description: "How the XP amount should be interpreted", required: false, choices: [
                 {name: "Add XP", value: "add_xp"},
                 {name: "Set XP to", value: "set_xp"},
                 {name: "Add levels", value: "add_level"},
