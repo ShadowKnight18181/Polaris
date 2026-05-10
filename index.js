@@ -73,14 +73,14 @@ client.on("ready", () => {
         
         // Filter out buttons/misc and only send valid slash commands
         const slashCommands = client.commands
-            .filter(cmd => cmd.metadata && !cmd.metadata.type.includes('button'))
-            .map(cmd => ({
-                name: cmd.metadata.name,
-                description: cmd.metadata.description || "Polaris Command",
-                options: cmd.metadata.options || [],
-                type: 1 // Force type to ChatInput (1)
-            }));
-
+    .filter(cmd => cmd.metadata && cmd.metadata.type === 1)
+    .map(cmd => ({
+        name: cmd.metadata.name,
+        description: cmd.metadata.description || "Polaris Command",
+        options: cmd.metadata.args || [],
+        type: 1
+    }));
+    
         try {
             await client.application.commands.set(slashCommands);
             console.log("✅ Commands deployed successfully!");
