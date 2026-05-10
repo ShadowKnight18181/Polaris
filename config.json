@@ -7,7 +7,7 @@
   
   "enableWebServer": true,
   "serverPort": 3000,
-  "siteURL": "http://localhost:3000",
+  "siteURL": "http://localhost:3121",
   
   "changelogURL": "",
   "supportURL": ""
