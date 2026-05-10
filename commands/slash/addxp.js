@@ -19,7 +19,12 @@ module.exports = {
 
     async run(client, int, tools) {
 
-        const targetUser = int.options.getUser("member")
+        const option = int.options.get("member")
+const targetUser = option?.user
+
+if (!targetUser) 
+    return tools.warn("I couldn't find that user!")
+
 const member = await int.guild.members.fetch(targetUser.id).catch(() => null)
         const amount = int.options.get("xp")?.value
         const operation = int.options.get("operation")?.value || "add_xp"
