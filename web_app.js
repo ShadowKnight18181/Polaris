@@ -439,15 +439,14 @@ app.post("/api/sendexample", async function(req, res) {
     if (lvlMessage.invalid) return res.apiError("Embed is invalid!");
      
     let fetchedUser = await client.users.fetch(user.id)
-    fetchedUser.send( lvlMessage.msg )
-    .then(() => res.end(JSON.stringify(lvlMessage.msg, null, 2)))
-    .catch((e) => {
-        fetchedUser.send(`**Error sending level up message!**\n\`\`\`${e.message}\`\`\``)
-        .then(() => res.end("Error: " + e.message))
-        .catch(() => {
-            return res.apiError("Could not fetch server info!");
-        })
-    })
+console.log("Trying to DM user:", user.id, fetchedUser?.tag)
+
+fetchedUser.send(lvlMessage.msg)
+.then(() => res.end(JSON.stringify(lvlMessage.msg, null, 2)))
+.catch((e) => {
+    console.error("DM example failed:", e)
+    return res.apiError("DM failed: " + e.message)
+})
 })
 
 app.post("/api/pruneMembers", async function(req, res) {
