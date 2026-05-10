@@ -80,7 +80,7 @@ client.on("ready", () => {
         options: cmd.metadata.args || [],
         type: 1
     }));
-    
+
         try {
             await client.application.commands.set(slashCommands);
             console.log("✅ Commands deployed successfully!");
@@ -96,16 +96,8 @@ client.on("ready", () => {
     if (client.shard.id == 0 && config.enableWebServer) require("./web_app.js")(client)
 })
 
-// on message
 client.on("ready", async () => {
-    // This forces the bot to register your commands to your main server immediately
-    const testGuildId = '1499504291080179854'; 
-    const guild = client.guilds.cache.get(testGuildId);
-    
-    if (guild) {
-        await guild.commands.set(client.commands.map(c => c.metadata));
-        console.log(`Commands deployed instantly to ${guild.name}`);
-    }
+    console.log("Skipping instant command deployment");
 });
 
 // on interaction
