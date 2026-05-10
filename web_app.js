@@ -824,10 +824,14 @@ app.get("/auth", async function(req, res) {
                 code: req.query.code,
                 redirect_uri: siteURL + "/auth"
             })
-        }).then(x => x.json()).then(data => {
-            if (data["error"]) return sendRedirect(res, "/"); // if discord sends an error (fake code, etc)
-            else return storeAuthToken(res, data) // if we reach here, it means the code was valid! on to step 3!
-        }).catch(e => { console.error(e); sendRedirect(res, "/?authorized") })
+       }).then(x => x.json()).then(data => {
+
+    console.log("OAuth response:", data)
+
+    if (data["error"]) return sendRedirect(res, "/");
+    else return storeAuthToken(res, data)
+
+}).catch(e => { console.error(e); sendRedirect(res, "/?authorized") })
     }
     
     // if there's no code, do nothing
