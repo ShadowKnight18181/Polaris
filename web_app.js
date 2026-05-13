@@ -64,7 +64,12 @@ function sendRedirect(res, name) {
 
 function canManageServer(guild) {
     if (!guild) return false
-    return guild.owner || (guild.permissions & manage_server) || (guild.permissions & server_admin)
+
+    // server owner
+    if (guild.owner) return true
+
+    // manage server permission
+    return (BigInt(guild.permissions) & 0x20n) === 0x20n
 }
 
 function botIsPublic() {
@@ -438,7 +443,12 @@ app.post("/api/sendexample", async function(req, res) {
     let lvlMessage = new LevelUpMessage(data.settings, msgData, { level: currentLevel, roleList: guildData.roles, userData: { xp: currentXP }, example: true })
     if (lvlMessage.invalid) return res.apiError("Embed is invalid!");
      
-    let fetchedUser = await client.users.fetch(user.id)
+    let guild = client.guilds.cache.get(guildID)
+let member = await guild.members.fetch(user.id).catch(() => null)
+
+if (!member) return res.apiError("You are not found as a member in this server.")
+
+let fetchedUser = member.user
 console.log("Trying to DM user:", user.id, fetchedUser?.tag)
 
 fetchedUser.send(lvlMessage.msg)

@@ -62,9 +62,14 @@ client.updateStatus = function() {
 
 // when online
 client.on("ready", () => {
-    if (client.shard.id == client.shard.count - 1) console.log(`Bot online! (${+process.uptime().toFixed(2)} secs)`)
+    if (client.shard.id == client.shard.count - 1) console.log(`Bot online! (${(+process.uptime()).toFixed(2)} secs)`)
+
+    console.log("Logged in bot:", client.user.username, client.user.id)
+    console.log("Guilds:", client.guilds.cache.map(g => `${g.name} (${g.id})`))
+
     client.startupTime = Date.now() - startTime
     client.version = version
+
 
     client.application.commands.fetch()
 .then(async cmds => {
@@ -153,5 +158,17 @@ client.on('warn', e => console.warn(e))
 
 process.on('uncaughtException', e => console.warn(e))
 process.on('unhandledRejection', (e, p) => console.warn(e))
+
+client.on("messageCreate", async message => {
+    if (!message.guild || message.author.bot) return
+
+    console.log("Message seen:", message.author.username, message.content)
+
+    const tools = new Tools(client)
+const xpEvent = client.commands.get("message")
+
+    if (xpEvent) xpEvent.run(client, message, tools)
+    else console.log("XP event not found")
+})
 
 client.login(process.env.DISCORD_TOKEN)
