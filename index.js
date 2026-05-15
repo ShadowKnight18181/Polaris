@@ -189,8 +189,13 @@ client.on("guildMemberAdd", async member => {
     const tools = new Tools(client)
     const welcomeEvent = client.commands.get("guildMemberAdd")
 
-    if (welcomeEvent) welcomeEvent.run(client, member, tools)
-    else console.log("Welcome event not found")
+    if (!welcomeEvent) return console.log("Welcome event not found")
+
+    try {
+        await welcomeEvent.run(client, member, tools)
+    } catch (e) {
+        console.error("Welcome event error:", e)
+    }
 })
 
 client.login(process.env.DISCORD_TOKEN)

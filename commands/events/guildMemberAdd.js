@@ -4,32 +4,15 @@ const { EmbedBuilder } = require("discord.js")
 module.exports = {
 
 async run(client, member, tools) {
-
-    console.log("guildMemberAdd event fired:", member.user.tag)
-
-    if (config.lockBotToDevOnly && !tools.isDev(member.user)) return
-n
-
-    let guildId = member.guild.id
-    let userId = member.user.id
-
-    let db = await tools.fetchSettings(userId, guildId)
-
-    if (db && db.settings?.enabled) {
-        let userData = db.users?.[userId] || { xp: 0, cooldown: 0 }
-
-        client.db.update(guildId, {
-            $set: {
-                [`users.${userId}`]: userData
-            }
-        }).exec()
-    }
+    console.log("Welcome event file is running for:", member.user.tag)
 
     let welcomeChannelId = config.welcomeChannel
-    if (!welcomeChannelId) return
+    console.log("Welcome channel ID:", welcomeChannelId)
 
-    let channel = member.guild.channels.cache.get(welcomeChannelId)
-    if (!channel) return
+    if (!welcomeChannelId) return console.log("No welcomeChannel in config.json")
+
+    let channel = await member.guild.channels.fetch(welcomeChannelId).catch(console.error)
+    if (!channel) return console.log("Welcome channel not found")
 
     let embed = new EmbedBuilder()
         .setColor("#7c5cff")
@@ -40,18 +23,36 @@ n
         .setTitle(`Welcome to ${member.guild.name}!`)
         .setDescription(`Welcome ${member}! We hope you have a great time here!`)
         .setThumbnail(member.user.displayAvatarURL())
-        .setImage("https://cdn.discordapp.com/attachments/1499822244103192627/1504976821576532108/pexels-photo-5243527.png?ex=6a08f263&is=6a07a0e3&hm=7a82cfd62bc8a555712f2de02b6b24b88c5281fb294f35171ab5e38c830fd9c8")
+        .setImage("https://i.imgur.com/AfFp7pu.png")
         .setFooter({
             text: `Member #${member.guild.memberCount}`
         })
         .setTimestamp()
 
-    channel.send({
+    let sentMessage = await channel.send({
         content: `${member}`,
         embeds: [embed]
-    }).then(sentMessage => {
-        sentMessage.react("👋").catch(() => {})
-    }).catch(() => {})
+    }).catch(console.error)
 
+    if (!sentMessage) return console.log("Welcome message failed to send")
+
+    await sentMessage.react("👋").catch(console.error)
+
+    // Level database setup
+    let guildId = member.guild.id
+    let userId = member.user.id
+
+    let db = await tools.fetchSettings(userId, guildId).catch(console.error)
+
+    if (db && db.settings?.enabled) {
+        let userData = db.users?.[userId] || { xp: 0, cooldown: 0 }
+
+        client.db.update(guildId, {
+            $set: {
+                [`users.${userId}`]: userData
+            }
+        }).exec()
+    }
 }
+
 }
