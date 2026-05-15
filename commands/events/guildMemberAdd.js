@@ -5,7 +5,10 @@ module.exports = {
 
 async run(client, member, tools) {
 
+    console.log("guildMemberAdd event fired:", member.user.tag)
+
     if (config.lockBotToDevOnly && !tools.isDev(member.user)) return
+n
 
     let guildId = member.guild.id
     let userId = member.user.id

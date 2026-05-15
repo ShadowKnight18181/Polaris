@@ -171,4 +171,26 @@ const xpEvent = client.commands.get("message")
     else console.log("XP event not found")
 })
 
+client.on("messageCreate", async message => {
+    if (!message.guild || message.author.bot) return
+
+    console.log("Message seen:", message.author.username, message.content)
+
+    const tools = new Tools(client)
+    const xpEvent = client.commands.get("message")
+
+    if (xpEvent) xpEvent.run(client, message, tools)
+    else console.log("XP event not found")
+})
+
+client.on("guildMemberAdd", async member => {
+    console.log("Member joined:", member.user.tag)
+
+    const tools = new Tools(client)
+    const welcomeEvent = client.commands.get("guildMemberAdd")
+
+    if (welcomeEvent) welcomeEvent.run(client, member, tools)
+    else console.log("Welcome event not found")
+})
+
 client.login(process.env.DISCORD_TOKEN)
