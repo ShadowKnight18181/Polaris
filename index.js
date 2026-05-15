@@ -171,5 +171,20 @@ const xpEvent = client.commands.get("message")
     else console.log("XP event not found")
 })
 
+client.on("guildMemberAdd", async member => {
+    console.log("Member joined:", member.user.tag)
+
+    const tools = new Tools(client)
+const xpEvent = client.commands.get("message")
+
+
+    if (!welcomeEvent) return console.log("Welcome event not found")
+
+    try {
+        await welcomeEvent.run(client, member, tools)
+    } catch (e) {
+        console.error("Welcome event error:", e)
+    }
+})
 
 client.login(process.env.DISCORD_TOKEN)
