@@ -22,7 +22,7 @@ async run(client, member, tools) {
         })
         .setTitle(`Welcome to ${member.guild.name}!`)
         .setDescription("We hope you have a great time here.")
-        .setImage("https://imgur.com/a/mMyOzIT")
+        .setImage("https://i.imgur.com/exjryzb.jpeg")
         .setFooter({
             text: `Member #${member.guild.memberCount}`
         })
