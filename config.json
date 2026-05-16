@@ -7,7 +7,7 @@
   
   "enableWebServer": true,
   "serverPort": 3121,
-  "siteURL": "http://localhost:3121",
+  "siteURL": "https://polaris-production-674c.up.railway.app",
   
   "changelogURL": "",
   "supportURL": "",
