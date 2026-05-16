@@ -15,7 +15,7 @@ async run(client, member, tools) {
     if (!channel) return console.log("Welcome channel not found")
 
     let embed = new EmbedBuilder()
-        .setColor("#7c5cff")
+        .setColor("#ff2fb3")
         .setAuthor({
             name: member.user.username,
             iconURL: member.user.displayAvatarURL()
