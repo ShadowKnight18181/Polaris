@@ -21,9 +21,8 @@ async run(client, member, tools) {
             iconURL: member.user.displayAvatarURL()
         })
         .setTitle(`Welcome to ${member.guild.name}!`)
-        .setDescription(`Welcome ${member}! We hope you have a great time here!`)
-        .setThumbnail(member.user.displayAvatarURL())
-        .setImage("https://i.imgur.com/AfFp7pu.png")
+        .setDescription("We hope you have a great time here.")
+        .setImage("https://imgur.com/a/mMyOzIT")
         .setFooter({
             text: `Member #${member.guild.memberCount}`
         })
