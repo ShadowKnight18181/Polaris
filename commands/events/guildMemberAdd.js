@@ -22,16 +22,16 @@ async run(client, member, tools) {
         })
         .setTitle(`Welcome to ${member.guild.name}!`)
         .setDescription("We hope you have a great time here.")
-        .setImage("https://i.imgur.com/exjryzb.jpeg")
+        .setImage("https://imgur.com/a/xEYpoGw")
         .setFooter({
             text: `Member #${member.guild.memberCount}`
         })
         .setTimestamp()
 
     let sentMessage = await channel.send({
-        content: `${member}`,
-        embeds: [embed]
-    }).catch(console.error)
+    embeds: [embed]
+}).catch(console.error)
+
 
     if (!sentMessage) return console.log("Welcome message failed to send")
 
