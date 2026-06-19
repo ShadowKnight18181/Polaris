@@ -2,9 +2,29 @@ const Discord = require("discord.js")
 const fs = require("fs")
 
 const config = require("./config.json")
+const topics = require("./json/topics.json")
 
 const Tools = require("./classes/Tools.js")
 const Model = require("./classes/DatabaseModel.js")
+
+let remainingTopics = []
+
+function getTopic() {
+    if (remainingTopics.length === 0) {
+        remainingTopics = [...topics]
+
+        for (let i = remainingTopics.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1))
+
+            ;[remainingTopics[i], remainingTopics[j]] = [
+                remainingTopics[j],
+                remainingTopics[i]
+            ]
+        }
+    }
+
+    return remainingTopics.pop()
+}
 
 // automatic files: these handle discord status and version number, manage them with the dev commands
 const autoPath = "./json/auto/"
@@ -162,10 +182,23 @@ process.on('unhandledRejection', (e, p) => console.warn(e))
 client.on("messageCreate", async message => {
     if (!message.guild || message.author.bot) return
 
+    if (message.content.trim().toLowerCase() === "?t") {
+        const embed = new Discord.EmbedBuilder()
+            .setColor("#ff2fb3")
+            .setTitle("Conversation Topic")
+            .setDescription(getTopic())
+            .setFooter({ text: `Requested by ${message.author.username}` })
+            .setTimestamp()
+
+        await message.channel.send({ embeds: [embed] }).catch(console.error)
+        return
+    }
+
+
     console.log("Message seen:", message.author.username, message.content)
 
     const tools = new Tools(client)
-const xpEvent = client.commands.get("message")
+    const xpEvent = client.commands.get("message")
 
     if (xpEvent) xpEvent.run(client, message, tools)
     else console.log("XP event not found")
