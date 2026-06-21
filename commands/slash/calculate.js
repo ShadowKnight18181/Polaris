@@ -86,6 +86,8 @@ async run(client, int, tools) {
         description: levelDetails.join("\n"), footer: progressBar
     })
 
-    const {variable} = await reply.fetch();
+    return int.reply({
+    embeds: [embed]
+})
 
 }}
