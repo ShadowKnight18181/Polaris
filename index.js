@@ -9,6 +9,8 @@ const Model = require("./classes/DatabaseModel.js")
 
 let remainingTopics = []
 
+const topicCooldowns = new Map()
+const TOPIC_COOLDOWN_MS = 5_000  // 5 seconds cooldown to prevent spam
 function getTopic() {
     if (remainingTopics.length === 0) {
         remainingTopics = [...topics]
@@ -183,16 +185,28 @@ client.on("messageCreate", async message => {
     if (!message.guild || message.author.bot) return
 
     if (message.content.trim().toLowerCase() === "?t") {
-        const embed = new Discord.EmbedBuilder()
-            .setColor("#ff2fb3")
-            .setTitle("Conversation Topic")
-            .setDescription(getTopic())
-            .setFooter({ text: `Requested by ${message.author.username}` })
-            .setTimestamp()
+    const cooldownKey = `${message.guild.id}:${message.channel.id}`
+    const cooldownEnd = topicCooldowns.get(cooldownKey) || 0
+    const remaining = cooldownEnd - Date.now()
 
-        await message.channel.send({ embeds: [embed] }).catch(console.error)
-        return
+    if (remaining > 0) {
+        return message.reply(
+            `Please wait ${Math.ceil(remaining / 1000)} seconds before requesting another topic.`
+        )
     }
+
+    topicCooldowns.set(cooldownKey, Date.now() + TOPIC_COOLDOWN_MS)
+
+    const embed = new Discord.EmbedBuilder()
+        .setColor("#ff2fb3")
+        .setTitle("Conversation Topic")
+        .setDescription(getTopic())
+        .setFooter({ text: `Requested by ${message.author.username}` })
+        .setTimestamp()
+
+    await message.channel.send({ embeds: [embed] }).catch(console.error)
+    return
+}
 
 
     console.log("Message seen:", message.author.username, message.content)
